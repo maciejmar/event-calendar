@@ -5,4 +5,3 @@ mongoose.connect( database, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-
