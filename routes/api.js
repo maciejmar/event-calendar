@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const testController = require('../controllers/api/test');
+const eventController = require('../controllers/api/events');
 
-router.get('/', testController.homepage)
+router.get('/', eventController.saveEvent);
 
 
 
