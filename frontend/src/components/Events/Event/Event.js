@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Event(props) {
+    const [showDesc, setShowDesc] = useState(false);
+    const toggleDesc = () => {
+        setShowDesc(!showDesc);
+    }
+
+    const editHandler = () => {
+        props.onEdit({
+            eventName:props.eventName,
+             firstName: props.firstName, 
+             id:props.id
+        })
+    }
+
     return(
         <div className = "event">
-                        <p>{props.eventName}</p>
+                        <p onClick ={toggleDesc}>{props.eventName}</p>
+                        { showDesc && (
                             <div className = "firstName">{props.firstName}</div>
-                            <button>edit</button>
+                            )}
+                            <button onClick={ ()=> props.onEdit({ editHandler }) }>edit</button>
                             <button className = "delete" onClick={() => props.onDelete(props.id)}
                                 >delete it
                             </button>
