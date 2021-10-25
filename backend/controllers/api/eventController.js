@@ -12,10 +12,14 @@ const Event = require('../../db/models/event');
     const lastName = req.body.lastName;
     const email = req.body.email;
     const eventDate = req.body.eventDate;
+    try {
     const newEvent = new Event({ eventName, firstName, lastName, email, eventDate });
     await newEvent.save();
-    res.status(201).send(newEvent);
+    }catch(err){
+      return res.status(422).json({ message:err.message})
     }
+    res.status(201).send(newEvent);
+  }
 
   async getAllEvents(req,res){
     let doc;
