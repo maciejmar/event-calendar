@@ -10,7 +10,7 @@ function Event(props) {
         props.onEdit({
             eventName:props.eventName,
              firstName: props.firstName, 
-             id:props.id
+             _id:props.id
         })
     }
 

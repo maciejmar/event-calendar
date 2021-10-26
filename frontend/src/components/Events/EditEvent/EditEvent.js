@@ -25,8 +25,15 @@ export default  function EditEvent(props) {
         setEmail(value);
     }
 
-    const editEvent = () =>{
-
+    const editEvent = () => {
+        const event={
+            eventName: eventName,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            _id: props.id
+        }
+        props.onEdit(event);
     }
 
     return (

@@ -1,58 +1,67 @@
 import React from 'react';
-import Event from './Event/Event';
 import './Events.css';
+import Event from './Event/Event';
 import NewEvent from './NewEvent/NewEvent';
 import Modal from 'react-modal';
 import EditEvent from './EditEvent/EditEvent'
+import axios from '../../axios';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 class Events extends React.Component {
     constructor(props) {
         super(props);
         this.state= {
-            events : [
-                {
-                    id: '212',
-                    eventName: 'contest',
-                    firstName: 'moi',
-                    lastName: 'mua',
-                    email: 'm@m',
-                    eventDate: '12'
-                },
-                {
-                    id: '21266',
-                    eventName: 'rubicon',
-                    firstName: 'doi',
-                    lastName: 'dua',
-                    email: 'd@d',
-                    eventDate: '127'
-                }
-    
-            ],
+            events : [],
             showEditModal: false,
             editEvent: {}
         }
         
     }
 
-    deleteEvent(id) {
+    componentDidMount(){
+        this.fetchEvents();
+    }
+
+    async fetchEvents(){
+       const res = await axios.get('/events');
+       const events = res.data;
+       console.log('res = ',res);
+       this.setState({ events });
+    }
+
+    async deleteEvent(id) {
         console.log('deleting event ',id);
         const events = [...this.state.events].filter(event => event.id !== id);
-        this.setState({events});
-    }
-
-    addEvent(event){
-        const events =[...this.state.events];
-        events.push(event);
+        await axios.delete("/event/"+ id);
         this.setState({ events });
+
     }
 
-    editEvent(event){
+    async addEvent(event){
+        const events =[...this.state.events];
+        try{
+        const res = await axios.post ('/event',event);
+        const newEvent = res.data;
+        events.push(newEvent);
+        this.setState({ events });
+        }
+        catch(err){
+           NotificationManager.error( err.response.data.message ); 
+        } 
+    }
+
+
+    async editEvent(event){
+        const res = await axios.put ('/event'+event._id,event);
         const events = [...this.state.events];
-        const index = events.findIndex( x  => x.id === event.id);
+        const index = events.findIndex( x  => x._id === event._id);
+
         if(index >=0) {
             events[index] = event;
+            this.setState({ events });
         }
-        this.setState({ events });
+        this.toggleModal();
     }
 
     toggleModal() {
@@ -71,6 +80,7 @@ class Events extends React.Component {
         
         return(
             <div>
+                <NotificationContainer/>
                 <h1>These are my Events</h1>
                 <NewEvent 
                 onAdd={ (event) => this.addEvent(event) }/>
@@ -82,20 +92,20 @@ class Events extends React.Component {
                         firstName={this.state.editEvent.firstName}
                         lastName={this.state.editEvent.lastName}
                         email={this.state.editEvent.email}
-                        id={this.state.editEvent.id}
-                         onAdd={(event) => this.addEvent(event)} />
+                        id={this.state.editEvent._id}
+                         onEdit={(event) => this.editEvent(event)} />
                     <button onClick={  ()=> this.toggleModal()} >Cancel</button>
                 </Modal>
 
                 {this.state.events.map( event =>  (
                         <Event 
-                          key={event.id}
+                          key={event._id}
                           eventName={event.eventName}
                           firstName={event.firstName}
                           lastName ={event.lastName}
                           email = {event.email}
                           eventDate = {event.eventDate}  
-                          id = {event.id}
+                          id = {event._id}
                           onEdit={(event) => this.editEventHandler (event)}
                           onDelete={ (id) => this.deleteEvent(id) }  />
                     ))}
@@ -106,4 +116,4 @@ class Events extends React.Component {
             
 
 
-export default Events
+export default Events;
