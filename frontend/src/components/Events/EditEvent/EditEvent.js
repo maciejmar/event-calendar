@@ -38,19 +38,19 @@ export default  function EditEvent(props) {
 
     return (
         <div className = "event">
-            <label>EventName</label>
+            <label>EventName:</label>
             <input type="text" value={eventName} onChange={changeEventNameHandler}/>
             <br/>
 
-            <label>firstName</label>
+            <label>firstName:</label>
             <input type="text" value={firstName} onChange={changeFirstNameHandler}/>
             <br/>
 
-            <label>lastName</label>
+            <label>lastName:</label>
             <input type="text" value = {lastName} onChange={changeLastNameHandler}/>
             <br/>
 
-            <label>email</label>
+            <label>email:</label>
             <input type="text" value={email} onChange={changeEmailHandler}/>
             <br/>
             <button onClick={() => editEvent() }> Save the changes</button>

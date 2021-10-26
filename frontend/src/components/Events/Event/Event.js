@@ -8,9 +8,11 @@ function Event(props) {
 
     const editHandler = () => {
         props.onEdit({
-            eventName:props.eventName,
-             firstName: props.firstName, 
-             _id:props.id
+            eventName: props.eventName,
+            firstName: props.firstName, 
+            lastName: props.lastName,
+            email: props.email,
+            _id: props.id
         })
     }
 

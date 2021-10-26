@@ -2,8 +2,8 @@ import React from 'react';
 import './Events.css';
 import Event from './Event/Event';
 import NewEvent from './NewEvent/NewEvent';
-import Modal from 'react-modal';
 import EditEvent from './EditEvent/EditEvent'
+import Modal from 'react-modal';
 import axios from '../../axios';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
@@ -32,7 +32,7 @@ class Events extends React.Component {
 
     async deleteEvent(id) {
         console.log('deleting event ',id);
-        const events = [...this.state.events].filter(event => event.id !== id);
+        const events = [...this.state.events].filter(event => event._id !== id);
         await axios.delete("/event/"+ id);
         this.setState({ events });
 
@@ -41,10 +41,10 @@ class Events extends React.Component {
     async addEvent(event){
         const events =[...this.state.events];
         try{
-        const res = await axios.post ('/event',event);
-        const newEvent = res.data;
-        events.push(newEvent);
-        this.setState({ events });
+            const res = await axios.post ('/event',event);
+            const newEvent = res.data;
+            events.push(newEvent);
+            this.setState({ events });
         }
         catch(err){
            NotificationManager.error( err.response.data.message ); 
@@ -53,7 +53,7 @@ class Events extends React.Component {
 
 
     async editEvent(event){
-        const res = await axios.put ('/event' + event._id,event);
+        await axios.put ('/event/' + event._id,event);
         const events = [...this.state.events];
         const index = events.findIndex( x  => x._id === event._id);
 
