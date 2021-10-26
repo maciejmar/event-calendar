@@ -12,6 +12,7 @@ const Event = require('../../db/models/event');
     const lastName = req.body.lastName;
     const email = req.body.email;
     const eventDate = req.body.eventDate;
+    let newEvent;
     try {
     const newEvent = new Event({ eventName, firstName, lastName, email, eventDate });
     await newEvent.save();
@@ -57,7 +58,7 @@ const Event = require('../../db/models/event');
   async deleteEvent(req,res){
     const id = req.params.id;
     await Event.deleteOne({ _id: id});
-    res.sendstatus(204);
+    res.sendStatus(204);
   }
 
   
