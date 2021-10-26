@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 function NewEvent(props) {
     const [showForm, setShowForm] = useState('false');
+    
     const [eventName, setEventName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');

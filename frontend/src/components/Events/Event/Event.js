@@ -20,10 +20,8 @@ function Event(props) {
                         { showDesc && (
                             <div className = "firstName">{props.firstName}</div>
                             )}
-                            <button onClick={ ()=> props.onEdit({ editHandler }) }>edit</button>
-                            <button className = "delete" onClick={() => props.onDelete(props.id)}
-                                >delete it
-                            </button>
+                            <button onClick={ editHandler  }>edit</button>
+                            <button className = "delete" onClick={() => props.onDelete(props.id)}>delete it</button>
                         </div>
 
     );

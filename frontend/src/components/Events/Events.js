@@ -53,7 +53,7 @@ class Events extends React.Component {
 
 
     async editEvent(event){
-        const res = await axios.put ('/event'+event._id,event);
+        const res = await axios.put ('/event' + event._id,event);
         const events = [...this.state.events];
         const index = events.findIndex( x  => x._id === event._id);
 
@@ -80,20 +80,21 @@ class Events extends React.Component {
         
         return(
             <div>
-                <NotificationContainer/>
+                <NotificationContainer />
                 <h1>These are my Events</h1>
                 <NewEvent 
                 onAdd={ (event) => this.addEvent(event) }/>
+
                 <Modal 
                  isOpen ={this.state.showEditModal}
                  contentLabel = "Edit Event">
                      <EditEvent 
                         eventName={this.state.editEvent.eventName}
                         firstName={this.state.editEvent.firstName}
-                        lastName={this.state.editEvent.lastName}
-                        email={this.state.editEvent.email}
-                        id={this.state.editEvent._id}
-                         onEdit={(event) => this.editEvent(event)} />
+                        lastName= {this.state.editEvent.lastName}
+                        email=    {this.state.editEvent.email}
+                        id=       {this.state.editEvent._id}
+                        onEdit={ event => this.editEvent(event)} />
                     <button onClick={  ()=> this.toggleModal()} >Cancel</button>
                 </Modal>
 
@@ -104,7 +105,6 @@ class Events extends React.Component {
                           firstName={event.firstName}
                           lastName ={event.lastName}
                           email = {event.email}
-                          eventDate = {event.eventDate}  
                           id = {event._id}
                           onEdit={(event) => this.editEventHandler (event)}
                           onDelete={ (id) => this.deleteEvent(id) }  />

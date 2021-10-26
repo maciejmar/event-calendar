@@ -52,7 +52,8 @@ export default  function EditEvent(props) {
 
             <label>email</label>
             <input type="text" value={email} onChange={changeEmailHandler}/>
-            <button onClick={() => editEvent() }> Edit the Event</button>
+            <br/>
+            <button onClick={() => editEvent() }> Save the changes</button>
 
         </div>
     )
